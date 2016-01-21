@@ -144,6 +144,59 @@ void traverse(Node* head){
     }
 }
 
+void printNthFromLast(Node* head, int Nth) {
+    int len=0,fs,i;
+    Node* ptr;
+    ptr = head;
+    while(ptr != NULL) {
+        len++;
+        ptr = ptr->next;
+    }
+    if(Nth > len) {
+        printf("No such node exists");
+        exit(EXIT_FAILURE);
+    }
+    fs = len-Nth+1;
+    printf("\nfs = %d th element from start ",fs);
+    ptr = head;
+    for(i=1 ; i<fs; i++) {
+        ptr = ptr->next;
+        //printf("\ni=%d",i);
+        //printf("\t data=%d",ptr->data);
+    }
+    printf("Item at %d position = %d " ,Nth,ptr->data);
+
+}
+
+void printNthFromLast_m2( Node* head, int n)
+{
+   Node *main_ptr = head;
+   Node *ref_ptr = head;
+
+  int count = 0;
+  if(head != NULL)
+  {
+     while( count < n )
+     {
+        if(ref_ptr == NULL)
+        {
+           printf("%d is greater than the no. of "
+                    "nodes in list", n);
+           return;
+        }
+        ref_ptr = ref_ptr->next;
+        count++;
+     } /* End of while*/
+
+     while(ref_ptr != NULL)
+     {
+        main_ptr = main_ptr->next;
+        ref_ptr  = ref_ptr->next;
+     }
+     printf("Node no. %d from last is %d ",
+              n, main_ptr->data);
+  }
+}
 
 int main(){
     int ch,loc;
@@ -161,6 +214,8 @@ int main(){
       printf("\n7.Delete First");
       printf("\n8.Delete Last");
       printf("\n9.Delete at LOC");
+      printf("\n10.Find Nth Element from Last ");
+      printf("\n11.Find Nth Element from Last for Method 2");
       printf("\nEnter your choice: ");
       scanf("%d",&ch);
       switch(ch)
@@ -197,6 +252,26 @@ int main(){
             scanf("%d",&loc);
             delPos(&p,loc);
             break;
+
+        // Applications or puzzle  of Linked Lists
+        case 10:
+            printf("Enter element no from end of LL : ");
+            scanf("%d",&loc);
+            if(loc <=0)
+                {printf("Enter a valid location");}
+            else
+                {printNthFromLast(p,loc);}
+            break;
+
+        case 11:
+            printf("Enter element no from end of LL : ");
+            scanf("%d",&loc);
+            if(loc <=0)
+                {printf("Enter a valid location");}
+            else
+                {printNthFromLast_m2(p,loc);}
+            break;
+
         default:
             printf("Enter a valid choice");
         }

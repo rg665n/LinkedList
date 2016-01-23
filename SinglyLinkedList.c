@@ -198,6 +198,69 @@ void printNthFromLast_m2( Node* head, int n)
   }
 }
 
+/* Insert node in Sorted Linked List */
+
+void addinSorted(int val , Node** head){
+    printf("Node creating");
+    /* Create New Node */
+    Node *ptr, *prv;
+    Node *nwNd;
+    ptr = *head;
+    nwNd =newNode(val);
+    while(ptr != NULL && ptr->data < nwNd->data) {
+        prv=ptr;
+        ptr=ptr->next;
+    }
+    nwNd->next = prv->next;
+    prv->next = nwNd;
+
+    printf("Node created");
+}
+
+void reverse(Node** head) {
+
+    Node *temp =NULL;
+    Node *nextNode =NULL;
+    while((*head)) {
+        nextNode = (*head)->next;
+        (*head)->next = temp;
+        temp=(*head);
+        (*head) = nextNode;
+    }
+    (*head) = temp;
+    printf("\n\n Linked list reverse.Choose 2 to see linked list \n\n ");
+}
+
+void recursiveReverse(Node** head)
+{
+    Node* first;
+    Node* rest;
+
+    /* empty list */
+    if (*head == NULL)
+       return;
+
+    /* Split list into two first part contains first element only
+    while other part will have rest of the elements*/
+    first = *head;
+    rest  = first->next;
+
+    /* When rest List has only one node */
+    if (rest == NULL)
+       return;
+
+    /* reverse the rest list */
+    recursiveReverse(&rest);
+    /*put the first element at the end */
+    first->next->next  = first;
+
+    /* As first is at end make its next as NULL */
+    first->next  = NULL;
+
+    /* Update head as start of rest list */
+    *head = rest;
+}
+
 int main(){
     int ch,loc;
      Node *p = NULL;
@@ -216,6 +279,9 @@ int main(){
       printf("\n9.Delete at LOC");
       printf("\n10.Find Nth Element from Last ");
       printf("\n11.Find Nth Element from Last for Method 2");
+      printf("\n12.Insert node in Sorted Linked List");
+      printf("\n13.Reverse linked List : Iterative Method");
+      printf("\n14.Reverse linked List : Recursive Method");
       printf("\nEnter your choice: ");
       scanf("%d",&ch);
       switch(ch)
@@ -272,6 +338,17 @@ int main(){
                 {printNthFromLast_m2(p,loc);}
             break;
 
+        case 12: //Add in Sorted
+            addinSorted(getVal(),&p);
+            break;
+
+        case 13: //Reverse LL Iterative
+            reverse(&p);
+            break;
+
+        case 14: //Revers LL Recursive
+            recursiveReverse(&p);
+            break;
         default:
             printf("Enter a valid choice");
         }

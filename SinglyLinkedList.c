@@ -261,6 +261,37 @@ void recursiveReverse(Node** head)
     *head = rest;
 }
 
+void findMiddle1(Node* head) {
+    Node *slow_p , *fast_p;
+    int cnt = 1;
+    slow_p = head;
+    fast_p = head;
+
+    while(fast_p != NULL && fast_p->next != NULL ) {
+            slow_p = slow_p->next;
+            fast_p = fast_p->next->next;
+            cnt++;
+    }
+    printf("\n\n Element at [%d] is middle of linked list \n\n",cnt);
+    printf("\n\nMiddle element is [%d] \n\n", slow_p->data);
+
+}
+
+void findMiddle2(Node* head) {
+    Node *ptr;
+    int cnt = 0;
+    ptr = head;
+    while(head != NULL ) {
+            if(cnt % 2 != 0 ) //odd count
+                ptr = ptr->next;
+            cnt++;
+            head = head->next;
+    }
+    //printf("\n\n Element at [%d] is middle of linked list \n\n",cnt);
+    printf("\n\nMiddle element is [%d] \n\n", ptr->data);
+
+}
+
 int main(){
     int ch,loc;
      Node *p = NULL;
@@ -282,6 +313,8 @@ int main(){
       printf("\n12.Insert node in Sorted Linked List");
       printf("\n13.Reverse linked List : Iterative Method");
       printf("\n14.Reverse linked List : Recursive Method");
+      printf("\n15.Middle of Linked list Method1");
+      printf("\n16.Middle of Linked List Method2");
       printf("\nEnter your choice: ");
       scanf("%d",&ch);
       switch(ch)
@@ -348,6 +381,13 @@ int main(){
 
         case 14: //Revers LL Recursive
             recursiveReverse(&p);
+            break;
+
+        case 15: //Find Middle
+            findMiddle1(p);
+            break;
+        case 16: //Find Middle
+            findMiddle2(p);
             break;
         default:
             printf("Enter a valid choice");

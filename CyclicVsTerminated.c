@@ -1,6 +1,6 @@
 //Flyod Algo
 
-// C program to detect loop in a linked list ,start of loop and length of loop
+// C program to detect loop in a linked list ,find start of loop , length of loop and remove loop
 #include<stdio.h>
 #include<stdlib.h>
 
@@ -119,6 +119,63 @@ int findLengthOfLoop(struct node *head) {
 }
 
 
+/*Find and remove Loop */
+
+int removeLoop(struct node *head) {
+ struct node  *slow_p = head, *fast_p = head;
+ struct node *prev = NULL;
+    int loopExists=0;
+
+    /* Check if Loop Exists */
+
+    while (slow_p && fast_p && fast_p->next )
+    {
+        slow_p = slow_p->next;
+        fast_p  = fast_p->next->next;
+        if (slow_p == fast_p)
+        {
+            loopExists = 1;
+            break;
+        }
+    }
+
+    /* Find Start of Loop if loop Exists */
+
+    if(loopExists) {
+        //printf("\n\n Rishabh Loop Exists");
+        slow_p = head;
+
+       while(slow_p != fast_p) {
+            slow_p = slow_p->next;
+            fast_p = fast_p->next;
+        }
+
+    //printf("\n\n Element at start of loop = %d", slow_p->data);
+    //Remove LOOP
+    prev = slow_p;
+    // Handling in case Head is start of loop and meeting point is also head
+    while (prev->next != slow_p) {
+        prev = prev->next;
+    }
+    //printf("\n\nprev->data = %d" , prev->data);
+    prev->next = NULL; //Making loop's first node's prev->next as null to break the loop.
+    return 1;
+    }
+    printf("\n\nNo Loop\n");
+    return 0;
+}
+
+/* Function to print linked list */
+void printList(struct node *node)
+{
+    while (node != NULL)
+    {
+        printf("%d  ", node->data);
+        node = node->next;
+    }
+    printf("\n\n");
+}
+
 /* Drier program to test above function*/
 int main()
 {
@@ -144,6 +201,14 @@ int main()
 
     /*Find Length of Loop */
     findLengthOfLoop(head);
+
+    /* Remove Loop */
+    //printf("\n\nRemove Loop \n\n");
+    removeLoop(head);
+
+    printf("\nLinked List after removing loop \n\n");
+    printList(head);
+
 
     return 0;
 }
